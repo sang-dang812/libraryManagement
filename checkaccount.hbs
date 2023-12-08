@@ -1,0 +1,51 @@
+<h3>Thống kê số tài khoản được tạo từ năm:</h3>
+<h4>Năm được chọn: <span class="year-choose">{{year}}</span>
+</h4> 
+<form method="GET" action="/checkaccount/detail">
+  <label for="year">Chọn năm</label>
+  <select type="text" name="year" id="year"></select>
+  <script>
+    // Lấy đối tượng select
+    var selectYear = document.getElementById("year");
+    var yearChoose = document.querySelector(".year-choose");
+    // Lấy năm hiện tại
+    var currentYear = new Date().getFullYear();
+
+    // Tạo một vòng lặp để thêm các tùy chọn năm vào ô chọn
+    for (var i = currentYear; i >= currentYear - 30; i--) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = i;
+        selectYear.add(option);
+    }
+
+    selectYear.addEventListener('change', (e) => {
+      yearChoose.textContent = e.target.value;
+    })
+  
+</script>
+
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">OK</button>
+  <a class="btn btn-outline-success my-2 my-sm-0" href="/add">Thêm tài khoản</a>
+
+</form>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Loại khách hàng</th>
+      <th scope="col">Giới tính</th>
+      <th scope="col">Tổng số tài khoản</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each acc}}
+    <tr>
+      <th scope="row">{{@index}}</th>
+      <td>{{this.Loaikhachhang}}</td>
+      <td>{{this.Gioitinh}}</td>
+      <td>{{this.Tongsotaikhoan}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

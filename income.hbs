@@ -1,0 +1,37 @@
+<h3>Thống kê doanh thu (không bao gồm tiền đồ ăn vặt)</h3>
+<form method="GET" action="/income/detail" class="form-inline my-2 my-lg-0 mt-4">
+  {{!-- <input class="form-control mr-sm-2" type="search" placeholder="Mã phim" name="Maphim"> --}}
+<div class="form-group">
+    <label for="exampleFormControlSelect1">Chọn mã phim</label>
+    <select class="form-control" id="exampleFormControlSelect1" placeholder="Mã phim" name="Maphim">
+      {{#each phim}}
+      <option>{{this.Maphim}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+</form>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Mã rạp</th>
+      <th scope="col">Tổng tiền suất chiếu (vé+ghế)</th>
+      <th scope="col">Tổng tiền vé</th>
+      <th scope="col">Tổng tiền ghế</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each income}}
+    <tr>
+      <th scope="row">{{@index}}</th>
+      <td>{{this.Marap}}</td>
+      <td>{{this.Doanhthu}}</td>
+      <td>{{this.Tongtienve}}</td>
+      <td>{{this.Tongtienghe}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -1,0 +1,22 @@
+<div class="mt-4">
+  <div class="row">
+    {{#each data}}
+    <div class="col-sm-6 col-lg-3 mb-4">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <a href="#">
+            <h5 class="card-title">{{this.Tentaikhoan}}</h5>
+          </a>
+          <p class="card-text">Mã tài khoản: {{this.Mataikhoan}}</p>
+          <p class="card-text">Loại tài khoản: {{this.Loaitaikhoan}}</p>
+          <p class="card-text">Mật khẩu: {{this.Matkhau}}</p>
+          <p class="card-text">Ngày lập TK: {{formatDate this.NgaylapTK}}</p>
+          <p class="card-text">Mã khách hàng: {{this.Makhachhang}}</p>
+          <a href="/edit/{{this.Mataikhoan}}" class="btn-sm btn-primary">Sửa tài khoản</a>
+          <a href="/delete/{{this.Mataikhoan}}" class="btn-sm btn-primary">Xóa tài khoản</a>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

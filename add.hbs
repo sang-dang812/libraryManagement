@@ -1,0 +1,123 @@
+<script>
+  function validateForm() {
+    let Tentaikhoan = document.forms["myForm"]["Tentaikhoan"].value;
+    let Mataikhoan = document.forms["myForm"]["Mataikhoan"].value;
+    let Matkhau = document.forms["myForm"]["Matkhau"].value;
+    let NgayLapTK = document.forms["myForm"]["NgayLapTK"].value;
+    let Loaitaikhoan = document.forms["myForm"]["Loaitaikhoan"].value;
+    let Makhachhang = document.forms["myForm"]["Makhachhang"].value;
+
+    let emptyFields = [];
+    let errFields = [];
+    if (Tentaikhoan == "") {
+      emptyFields.push("Tên tài khoản");
+    }
+
+    if (Mataikhoan == "") {
+      emptyFields.push("Mã tài khoản");
+    }
+
+    if (Matkhau == "") {
+      emptyFields.push("Mật khẩu");
+    } else {
+      // Kiểm tra mật khẩu có ít nhất 9 kí tự, bao gồm ít nhất 1 số và chữ in hoa
+      let passwordPattern = /^(?=.*[A-Z])(?=.*\d).{9,}$/;
+      if (!passwordPattern.test(Matkhau)) {
+        errFields.push("Mật khẩu không hợp lệ");
+      }
+    }
+
+    if (NgayLapTK == "") {
+      emptyFields.push("Ngày lập TK");
+    }
+
+    if (Loaitaikhoan == "") {
+      emptyFields.push("Loại TK");
+    }
+
+    if (Makhachhang == "") {
+      emptyFields.push("Mã khách hàng");
+    }
+
+    if (emptyFields.length > 0 || errFields.length > 0) {
+      // Display modal with the list of empty fields
+      $('#errorModal').modal('show');
+      let modalObj = document.getElementById("errorFields");
+      let allErrors = emptyFields.concat(errFields);
+      modalObj.innerHTML = allErrors.join(", ");
+      return false;
+    }
+
+    return true;
+  }
+</script>
+
+<!-- Modal for displaying errors -->
+<div class="modal" tabindex="-1" role="dialog" id="errorModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Có lỗi xảy ra!!!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn đang nhập thiếu các trường sau: <span id="errorFields"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 mb-4">
+  <h3>Thêm tài khoản mới</h3>
+  <form name="myForm" method="POST" action="/add" onsubmit="return validateForm()">
+    <div class="form-group">
+      <label for="Tentaikhoan">Tên tài khoản</label><br>
+      <input type="text" class="Tentaikhoan" id="Tentaikhoan" name="Tentaikhoan" style="width: 100%;"
+        placeholder="Tentaikhoan">
+    </div>
+    <div class="form-group">
+      <label for="Mataikhoan">Mã tài khoản</label><br>
+      <input type="text" class="Mataikhoan" id="Mataikhoan" name="Mataikhoan" style="width: 100%;"
+        placeholder="Mataikhoan">
+
+    </div>
+    <div class="form-group">
+      <label for="Matkhau">Mật khẩu</label><br>
+      <input type="text" class="Matkh" id="Matkhau" name="Matkhau" style="width: 100%;" placeholder="Matkhau">
+    </div>
+    <div class="form-group">
+      <label for="NgayLapTK">Ngày lập TK</label><br>
+      <input type="text" class="NgayLapTK" id="NgayLapTK" name="NgayLapTK" style="width: 100%;" placeholder="NgayLapTK">
+    </div>
+    <script>
+      $(document).ready(function () {
+        $(function () {
+          $("#NgayLapTK").datepicker({
+            changeYear: true,
+            dateFormat: 'dd-mm-yy'
+          });
+        });
+      }) 
+    </script>
+    <div class="form-group">
+      <label for="Loaitaikhoan">Loại TK</label><br>
+      <select type="text" class="Loaitaikhoan" id="Loaitaikhoan" name="Loaitaikhoan" style="width: 100%;"
+        placeholder="Loaitaikhoan">
+        <option value="active">Tài khoản hoạt động (active)</option>
+        <option value="banned">Tài khoản bị cấm (banned)</option>
+        </select>
+    </div>
+    <div class="form-group">
+      <label for="Makhachhang">Mã khách hàng</label><br>
+      <input type="text" class="Makhachhang" id="Makhachhang" name="Makhachhang" style="width: 100%;"
+        placeholder="Makhachhang">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Đồng ý</button>
+  </form>
+</div>
