@@ -1,22 +1,88 @@
+<script>
+  function search() {
+    var searchData = document.querySelector('#searchInput').value.toLowerCase();
+    var cards = document.querySelectorAll('#container-box .card');
+    cards.forEach(function (card) {
+      var cardText = card.innerText.toLowerCase();
+      console.log(cardText);
+      if (cardText.includes(searchData)) {
+        card.style.backgroundColor = 'yellow'; // Highlighting color
+      } else {
+        card.style.backgroundColor = ''; // Reset to default color
+      }
+    });
+  }
+  
+ document.querySelectorAll('.modified-btn').forEach(function(button) {
+    button.addEventListener('click', function() {
+      console.log('abc');
+      var filterContent = document.querySelector('.filter-content');
+      filterContent.innerText = "Web đang được sắp xếp theo: " + this.innerText;
+    });
+  });
+
+  
+</script>
+<style>
+  .green-btn {
+    background-color: yellowgreen;
+  }
+</style>
 <div class="mt-4">
-  <div class="row">
-    {{#each data}}
-    <div class="col-sm-6 col-lg-3 mb-4">
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <a href="#">
-            <h5 class="card-title">{{this.Tentaikhoan}}</h5>
-          </a>
-          <p class="card-text">Mã tài khoản: {{this.Mataikhoan}}</p>
-          <p class="card-text">Loại tài khoản: {{this.Loaitaikhoan}}</p>
-          <p class="card-text">Mật khẩu: {{this.Matkhau}}</p>
-          <p class="card-text">Ngày lập TK: {{formatDate this.NgaylapTK}}</p>
-          <p class="card-text">Mã khách hàng: {{this.Makhachhang}}</p>
-          <a href="/edit/{{this.Mataikhoan}}" class="btn-sm btn-primary">Sửa tài khoản</a>
-          <a href="/delete/{{this.Mataikhoan}}" class="btn-sm btn-primary">Xóa tài khoản</a>
-        </div>
+  <div class="row ml-4 mb-4 mr-4">
+    <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm" style="max-width:300px">
+    <button type="submit" class="btn-primary btn-md" onclick="search()">OK</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3 col-lg-3 mb-4 ml-auto">
+    <form action="" method="GET">
+      <input type="hidden" name="sortOption" value="date-inc">
+      <button type="submit" class="btn-primary btn-md modified-btn">Sắp xếp theo ngày tăng dần</button>
+    </form>
+  </div>
+
+  <div class="col-sm-3 col-lg-3 mb-4">
+    <form action="" method="GET">
+      <input type="hidden" name="sortOption" value="name-inc">
+      <button type="submit" class="btn-primary btn-md modified-btn">Sắp xếp theo tên tăng dần</button>
+    </form>
+  </div>
+
+  <div class="col-sm-3 col-lg-3 mb-4">
+    <form action="" method="GET">
+      <input type="hidden" name="sortOption" value="date-desc">
+      <button type="submit" class="btn-primary btn-md modified-btn">Sắp xếp theo ngày giảm dần</button>
+    </form>
+  </div>
+
+  <div class="col-sm-3 col-lg-3 mb-4">
+    <form action="" method="GET">
+      <input type="hidden" name="sortOption" value="name-desc">
+      <button type="submit" class="btn-primary btn-md modified-btn">Sắp xếp theo tên giảm dần</button>
+    </form>
+  </div>
+</div>
+
+<div class="row" id="container-box">
+  {{#each sortedData}}
+  <div class="col-sm-6 col-lg-3 mb-4">
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <a href="#">
+          <h5 class="card-title">{{this.Tentaikhoan}}</h5>
+        </a>
+        <p class="card-text">Mã tài khoản: {{this.Mataikhoan}}</p>
+        <p class="card-text">Loại tài khoản: {{this.Loaitaikhoan}}</p>
+        <p class="card-text">Mật khẩu: {{this.Matkhau}}</p>
+        <p class="card-text">Ngày lập TK: {{formatDate this.NgaylapTK}}</p>
+        <p class="card-text">Mã khách hàng: {{this.Makhachhang}}</p>
+        <a href="/edit/{{this.Mataikhoan}}" class="btn-sm btn-primary">Sửa tài khoản</a>
+        <a href="/delete/{{this.Mataikhoan}}" class="btn-sm btn-primary">Xóa tài khoản</a>
       </div>
     </div>
-    {{/each}}
   </div>
+  {{/each}}
+</div>
 </div>
